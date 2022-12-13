@@ -8,5 +8,5 @@
 import Foundation
 
 protocol ArticleListAPIClientProtocol {
-  func fetch(completion: @escaping (([Article]?) -> Void))
+    func fetch(completion: @escaping (([Article]?) -> Void))
 }
