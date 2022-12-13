@@ -11,7 +11,7 @@ import SwiftUI
 struct MiniApp115_SwiftUI_TestDriven_WithBookApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ArticleListView()
         }
     }
 }

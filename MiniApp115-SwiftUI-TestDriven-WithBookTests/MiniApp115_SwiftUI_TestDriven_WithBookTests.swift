@@ -6,31 +6,42 @@
 //
 
 import XCTest
-@testable import MiniApp115_SwiftUI_TestDriven_WithBook
+import ViewInspector
+@testable import MiniApp110_SwiftUI_TestDriven01
+extension ArticleListView: Inspectable{}
 
-final class MiniApp115_SwiftUI_TestDriven_WithBookTests: XCTestCase {
+final class MiniApp110_SwiftUI_TestDriven01Tests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func test_タイトルが表示されていること() {
+        let article = Article(title: "記事タイトル")
+        let client = FakeArticleListAPIClient(fakeResponse: [article])
+
+        let view = ArticleListView()
+        let textLabel = try! view.inspect().zStack().vStack(0).text(0).string()
+
+        XCTAssertEqual(textLabel, "記事タイトル")
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    func test_タイトル２が表示されていること() {
+        let article = Article(title: "記事タイトル２")
+        let client = FakeArticleListAPIClient(fakeResponse: [article])
+
+        let view = ArticleListView()
+        let textLabel = try! view.inspect().zStack().vStack(0).text(0).string()
+
+        XCTAssertEqual(textLabel, "記事タイトル２")
+
+
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
+}
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+class FakeArticleListAPIClient: ArticleListAPIClientProtocol {
+    let fakeResponse: [Article]
+    init(fakeResponse: [Article]) {
+        self.fakeResponse = fakeResponse
     }
-
+    func fetch(completion: @escaping (([Article]?) -> Void)) {
+        completion(fakeResponse)
+    }
 }
